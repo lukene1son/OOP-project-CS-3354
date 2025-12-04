@@ -30,4 +30,28 @@ public class Task {
     public boolean isCompleted() {
         return completed;
     }
+
+    public void setCompleted(boolean completed) {
+        this.completed = completed;
+    }
+
+    @Override
+    public String toString() {
+        return (completed ? "[✔] " : "[ ] ") + title;
+    }
+
+    // For saving to file
+    public String toData() {
+        return title + ";" + description + ";" + completed;
+    }
+
+    public static Task fromData(String line) {
+        String[] parts = line.split(";");
+        if (parts.length != 3) {
+            return null;
+        }
+        Task t = new Task(parts[0], parts[1]);
+        t.setCompleted(Boolean.parseBoolean(parts[2]));
+        return t;
+    }
 }
