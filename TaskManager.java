@@ -24,6 +24,30 @@ public class TaskManager {
         tasks.remove(index);
     }
 
+    public void markCompleted(int index) {
+        Task t = tasks.get(index);
+        // Since Task class does not yet have setCompleted(), we will update it later.
+        // For now, we directly access the field using reflection or a placeholder.
+        // Temporarily, use a workaround:
+        try {
+            java.lang.reflect.Field field = Task.class.getDeclaredField("completed");
+            field.setAccessible(true);
+            field.setBoolean(t, true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Task> getCompletedTasks() {
+        ArrayList<Task> completed = new ArrayList<>();
+        for (Task t : tasks) {
+            if (t.isCompleted()) {
+                completed.add(t);
+            }
+        }
+        return completed;
+    }
+
     public ArrayList<Task> getTasks() {
         return tasks;
     }
